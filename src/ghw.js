@@ -24,20 +24,24 @@ if(!output) {
     return;
 }
 
-console.log(input, output);
+transform(input, output);
 
-parseFile(input);
-
- 
-function parseFile(path) {
-    fs.readFile(path, 'utf-8', function(err, data) {
+function transform(f, o) {
+    fs.readFile(f, 'utf-8', function(err, data) {
         if (err) throw err;
 
-        var tokens = marked.lexer(data);
-        console.log(tokens);
+        var tokens = marked(data); //marked.lexer(data);
 
         // TODO: convert links to something sensible
-        // TODO: write to HTML
+        //console.log(tokens);
+
+        // TODO: mkdir if necessary
+        var target = o + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
+        fs.writeFile(target, tokens, function(err) {
+            if (err) throw err;
+
+            console.log('Wrote ' + target);
+        })
     });
 }
 

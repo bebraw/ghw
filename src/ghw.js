@@ -1,12 +1,17 @@
 #!/usr/bin/env node
-// Usage:  ghw <input dir> <output dir>
+// Usage:  ghw <input> <output dir>
+// where <input> is either a file or a dir.
 var VERSION = '0.0.1'
 
 var fs = require('fs');
 var marked = require('marked');
 
-// TODO: get files from given dir
-//var dir = process.argv.splice(2)[0];
+var args = process.argv.splice(2);
+var input = args[0];
+var output = args[1];
+
+console.log('ghw ' + VERSION);
+console.log(input, output);
 
 // TODO: load them to some nice data structure
 // TODO: define conversions
@@ -22,6 +27,4 @@ function parseFile(path) {
         // TODO: once that's ok, write to output
     });
 }
-
-console.log('ghw ' + VERSION);
 

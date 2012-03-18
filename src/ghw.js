@@ -11,6 +11,13 @@ var input = args[0];
 var output = args[1];
 
 console.log('ghw ' + VERSION);
+
+if(!output) {
+    console.log('Missing output!');
+
+    return;
+}
+
 console.log(input, output);
 
 // TODO: load them to some nice data structure

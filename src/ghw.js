@@ -26,18 +26,18 @@ if(!output) {
 
 console.log(input, output);
 
-// TODO: load them to some nice data structure
-// TODO: define conversions
-// TODO: write them to HTML
+parseFile(input);
+
  
 function parseFile(path) {
     fs.readFile(path, 'utf-8', function(err, data) {
         if (err) throw err;
 
-        // TODO: convert on parse
-        // TODO: once parsing has been done, load to data structure
-        // using marked.lexer
-        // TODO: once that's ok, write to output
+        var tokens = marked.lexer(data);
+        console.log(tokens);
+
+        // TODO: convert links to something sensible
+        // TODO: write to HTML
     });
 }
 

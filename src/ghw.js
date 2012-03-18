@@ -12,6 +12,12 @@ var output = args[1];
 
 console.log('ghw ' + VERSION);
 
+if(!input) {
+    console.log('Missing input and output!');
+
+    return;
+}
+
 if(!output) {
     console.log('Missing output!');
 

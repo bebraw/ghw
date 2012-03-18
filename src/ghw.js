@@ -7,39 +7,45 @@ var fs = require('fs');
 var marked = require('marked');
 var mu = require('mu2');
 
-var args = process.argv.splice(2);
-var input = args[0];
-var output = args[1];
+if(require.main == module) {
+    var args = process.argv.splice(2);
+    var input = args[0];
+    var output = args[1];
 
-// TODO: pass this via a param
-var template = 'templates/base.html';
+    // TODO: pass this via a param
+    var template = 'templates/base.html';
 
-console.log('ghw ' + VERSION);
+    console.log('ghw ' + VERSION);
 
-if(!input) {
-    console.log('Missing input and output!');
+    if(!input) {
+        console.log('Missing input and output!');
 
-    return;
-}
+        return;
+    }
 
-if(!output) {
-    console.log('Missing output!');
+    if(!output) {
+        console.log('Missing output!');
 
-    return;
-}
+        return;
+    }
 
-transform(input, function(f, d) {
-    var stream = mu.compileAndRender(template, {data: d});
-    var target = output + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
-    var writeStream = fs.createWriteStream(target);
+    transform(input, transformers(), function(f, d) {
+        var stream = mu.compileAndRender(template, {data: d});
+        var target = output + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
+        var writeStream = fs.createWriteStream(target);
 
-    stream.pipe(writeStream);
-    stream.on('end', function() {
-        console.log('Wrote ' + target);
+        stream.pipe(writeStream);
+        stream.on('end', function() {
+            console.log('Wrote ' + target);
+        });
     });
-});
+}
+else {
+    exports.transform = transform;
+    exports.transformers = transformers();
+}
 
-function transform(f, done) {
+function transform(f, transformers, done) {
     fs.readFile(f, 'utf-8', function(err, data) {
         if (err) throw err;
 
@@ -48,10 +54,7 @@ function transform(f, done) {
                 // TODO: match [[name|link]] before this
                 return {
                     type: 'text',
-                    text: t.text.replace(
-                        /\[\[([^\]]+)\]\]/,
-                        '<a href="$1.html">$1</a>'
-                    )
+                    text: transformers.bracket_link(t.text)
                 };
             }
             return t;
@@ -60,5 +63,16 @@ function transform(f, done) {
 
         done(f, marked.parser(tokens));
     });
+}
+
+function transformers() {
+    return {
+        bracket_link: function(t) {
+            return t.replace(
+                /\[\[([^\]]+)\]\]/,
+                '<a href="$1.html">$1</a>'
+            );
+        }
+    };
 }
 

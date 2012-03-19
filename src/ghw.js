@@ -124,7 +124,9 @@ function transformers() {
             return t.replace(
                 /\[\[([^\|]+)\|([^\]]+)\]\]/g,
                 function(orig, a, b) {
-                    return '<a href="' + b.replace(' ', '-') + '">' + a + '</a>';
+                    var suffix = b.match('^http')? '': '.html';
+
+                    return '<a href="' + b.replace(' ', '-') + suffix + '">' + a + '</a>';
                 }
             );
         },

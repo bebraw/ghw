@@ -3,9 +3,11 @@ var assert = require('assert');
 var ghw = require('./ghw');
 
 var bracket_pipe_link = ghw.transformers.bracket_pipe_link;
-assert.ok(bracket_pipe_link('[[foo|bar]]') == '<a href="bar">foo</a>');
-assert.ok(bracket_pipe_link('[[foo|bar bar]]') == '<a href="bar-bar">foo</a>');
-assert.ok(bracket_pipe_link('[[a|b]] [[b|a]]') == '<a href="b">a</a> <a href="a">b</a>');
+assert.ok(bracket_pipe_link('[[foo|bar]]') == '<a href="bar.html">foo</a>');
+assert.ok(bracket_pipe_link('[[foo|bar bar]]') == '<a href="bar-bar.html">foo</a>');
+assert.ok(bracket_pipe_link('[[a|b]] [[b|a]]') == '<a href="b.html">a</a> <a href="a.html">b</a>');
+assert.ok(bracket_pipe_link('[[a|http://b]]') == '<a href="http://b">a</a>');
+assert.ok(bracket_pipe_link('[[a|https://b]]') == '<a href="https://b">a</a>');
 
 var pipe_link = ghw.transformers.pipe_link;
 assert.ok(pipe_link('[foo|bar]') == '<a href="bar">foo</a>');

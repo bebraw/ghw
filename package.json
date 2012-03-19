@@ -1,0 +1,14 @@
+{
+    'name': 'ghw',
+    'description': 'Github wiki to HTML converter',
+    'author': 'Juho Vepsalainen',
+    'version': '0.3.0',
+    'main': './lib/ghw.js',
+    'bin': './bin/ghw',
+    'preferGlobal': false,
+    'repository': 'git@github.com:bebraw/ghw.git',
+    'homepage': 'https://github.com/bebraw/ghw',
+    'bugs': { 'url': 'https://github.com/bebraw/ghw/issues' },
+    'keywords': ['markdown', 'github', 'html', 'wiki'],
+    'tags': ['markdown', 'github', 'html', 'wiki'],
+}

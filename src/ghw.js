@@ -8,30 +8,29 @@ var marked = require('marked');
 var mu = require('mu2');
 
 if(require.main == module) {
-    var args = process.argv.splice(2);
-    var input = args[0];
-    var output = args[1];
+    var program = require('commander');
 
-    // TODO: pass this via a param
-    var template = 'templates/base.html';
+    program.
+        version(VERSION).
+        option('-t --template <template>', 'base template (Moustache)').
+        option('-i --input <input>', 'input (file/directory)').
+        option('-o --output <output>', 'output directory').
+        parse(process.argv);
+
+    function quit(msg) {
+        console.log(msg);
+        process.exit();
+    }
+
+    if (!program.template) quit('Missing template');
+    if (!program.input) quit('Missing input');
+    if (!program.output) quit('Missing output');
 
     console.log('ghw ' + VERSION);
 
-    if(!input) {
-        console.log('Missing input and output!');
-
-        return;
-    }
-
-    if(!output) {
-        console.log('Missing output!');
-
-        return;
-    }
-
-    transform(input, transformers(), function(f, d) {
-        var stream = mu.compileAndRender(template, {data: d});
-        var target = output + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
+    transform(program.input, transformers(), function(f, d) {
+        var stream = mu.compileAndRender(program.template, {data: d});
+        var target = program.output + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
         var writeStream = fs.createWriteStream(target);
 
         stream.pipe(writeStream);
@@ -41,6 +40,7 @@ if(require.main == module) {
     });
 }
 else {
+    exports.VERSION = VERSION;
     exports.transform = transform;
     exports.transformers = transformers();
 }

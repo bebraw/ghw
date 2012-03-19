@@ -74,7 +74,7 @@ function transform(f, transformers, done) {
         if (err) throw err;
 
         var tokens = marked.lexer(data).map(function(t) {
-            if(t.type == 'text') {
+            if(t.type == 'text' || t.type == 'paragraph') {
                 var text = t.text;
 
                 for(var k in transformers) {

@@ -15,3 +15,7 @@ You can use "sudo npm install marked mu2 commander" to install these. Note that 
 
 Big thanks to [guille](https://github.com/guille) for motivating the project! The [Node](https://github.com/joyent/node) guys deserve thanks too.
 
+## License
+
+ghw is available under MIT. See LICENSE for more details.
+

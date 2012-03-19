@@ -51,10 +51,15 @@ function transform(f, transformers, done) {
 
         var tokens = marked.lexer(data).map(function(t) {
             if(t.type == 'text') {
-                // TODO: match [[name|link]] before this
+                var text = t.text;
+
+                for(var k in transformers) {
+                    text = transformers[k](text);
+                }
+
                 return {
                     type: 'text',
-                    text: transformers.bracket_link(t.text)
+                    text: text
                 };
             }
             return t;
@@ -67,6 +72,12 @@ function transform(f, transformers, done) {
 
 function transformers() {
     return {
+        pipe_link: function(t) {
+            return t.replace(
+                /\[([^\|]+)\|([^\]]+)\]/,
+                '<a href="$2">$1</a>'
+            );
+        },
         bracket_link: function(t) {
             return t.replace(
                 /\[\[([^\]]+)\]\]/,

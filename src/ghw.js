@@ -109,6 +109,9 @@ function transformers() {
                     return '<a href="' + a.replace(' ', '-')  + '.html">' + a + '</a>';
                 }
             );
+        },
+        paragraphs: function(t) {
+            return '<p>' + t.split('\n').join('</p><p>') + '</p>';
         }
     };
 }

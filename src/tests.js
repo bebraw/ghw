@@ -13,3 +13,6 @@ assert.ok(bracket_link('[[foo]]') == '<a href="foo.html">foo</a>');
 assert.ok(bracket_link('[[foo foo]]') == '<a href="foo-foo.html">foo foo</a>');
 assert.ok(bracket_link('[[a]] [[b]]') == '<a href="a.html">a</a> <a href="b.html">b</a>');
 
+var paragraphs = ghw.transformers.paragraphs;
+assert.ok(paragraphs('foo\nbar') == '<p>foo</p><p>bar</p>');
+

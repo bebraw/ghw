@@ -3,6 +3,7 @@ var VERSION = '0.2.0'
 
 var path = require('path');
 var fs = require('fs');
+var wrench = require('wrench');
 var marked = require('marked');
 var mu = require('mu2');
 
@@ -34,8 +35,6 @@ if(require.main == module) {
     function main() {
         console.log('ghw ' + VERSION + '\n');
 
-        // TODO: copy all except base to output
-
         if(!path.existsSync(program.output)) {
             fs.mkdirSync(program.output);
         }
@@ -62,6 +61,9 @@ if(require.main == module) {
                 });
             }
         });
+
+        wrench.copyDirSyncRecursive(program.templates, program.output);
+        // TODO: might want to skip dot files and base.html
     }
 
     function proc(t, o, f, d) {

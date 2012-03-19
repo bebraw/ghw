@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Usage:  ghw <input> <output dir>
 // where <input> is either a file or a dir.
-var VERSION = '0.0.3'
+var VERSION = '0.1.0'
 
 var path = require('path');
 var fs = require('fs');

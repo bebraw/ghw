@@ -120,6 +120,14 @@ function transform(f, transformers, done) {
 
 function transformers() {
     return {
+        bracket_pipe_link: function(t) {
+            return t.replace(
+                /\[\[([^\|]+)\|([^\]]+)\]\]/g,
+                function(orig, a, b) {
+                    return '<a href="' + b.replace(' ', '-') + '">' + a + '</a>';
+                }
+            );
+        },
         pipe_link: function(t) {
             return t.replace(
                 /\[([^\|]+)\|([^\]]+)\]/g,

@@ -11,7 +11,7 @@ if(require.main == module) {
 
     program.
         version(VERSION).
-        option('-t --template <template>', 'base template (Moustache)').
+        option('-t --templates <template>', 'template directory').
         option('-i --input <input>', 'input (file/directory)').
         option('-o --output <output>', 'output directory').
         parse(process.argv);
@@ -21,37 +21,48 @@ if(require.main == module) {
         process.exit();
     }
 
-    if (!program.template) quit('Missing template');
+    if (!program.templates) quit('Missing template directory');
     if (!program.input) quit('Missing input');
     if (!program.output) quit('Missing output');
 
-    console.log('ghw ' + VERSION);
+    var baseTemplate = path.join(program.templates, 'base.html');
 
-    fs.stat(program.input, function(err, stats) {
-        if (err) throw err;
-
-        if(stats.isFile()) {
-            transform(program.input, transformers(), proc);
-        }
-        if(stats.isDirectory()) {
-            fs.readdir(program.input, function(err, files) {
-                if (err) throw err;
-
-                files.forEach(function (file) {
-                    var p = path.join(program.input, file);
-                   
-                    fs.stat(p, function(err, stats) {
-                        if(stats.isFile()) {
-                            transform(p, transformers(), proc);
-                        }
-                    });
-                });
-            });
-        }
+    path.exists(baseTemplate, function(exists) {
+        exists? main(): quit('Template directory is missing base.html'); 
     });
 
-    function proc(f, d) {
-        var stream = mu.compileAndRender(program.template, {data: d});
+    function main() {
+        console.log('ghw ' + VERSION);
+
+        // TODO: copy all except base to output
+        // TODO: create output dir unless it exists already
+
+        fs.stat(program.input, function(err, stats) {
+            if (err) throw err;
+
+            if(stats.isFile()) {
+                transform(program.input, transformers(), partial(proc, baseTemplate));
+            }
+            if(stats.isDirectory()) {
+                fs.readdir(program.input, function(err, files) {
+                    if (err) throw err;
+
+                    files.forEach(function (file) {
+                        var p = path.join(program.input, file);
+                   
+                        fs.stat(p, function(err, stats) {
+                            if(stats.isFile()) {
+                                transform(p, transformers(), partial(proc, baseTemplate));
+                            }
+                        });
+                    });
+                });
+            }
+        });
+    }
+
+    function proc(t, f, d) {
+        var stream = mu.compileAndRender(t, {data: d});
         var target = path.join(program.output, path.basename(f, '.md') + '.html');
         var writeStream = fs.createWriteStream(target);
 
@@ -65,6 +76,16 @@ else {
     exports.VERSION = VERSION;
     exports.transform = transform;
     exports.transformers = transformers();
+}
+
+// http://stackoverflow.com/questions/4394747/javascript-curry-function
+function partial(fn) {
+    var slice = Array.prototype.slice;
+    var args = slice.apply(arguments, [1]);
+
+    return function() {
+        return fn.apply(null, args.concat(slice.apply(arguments)));
+    };
 }
 
 function transform(f, transformers, done) {

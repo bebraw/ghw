@@ -147,8 +147,12 @@ function transformers() {
             );
         },
         paragraphs: function(t) {
-            return '<p>' + t.split('\n').join('</p><p>') + '</p>';
+            return '<p>' + t.split('\n').filter(id).join('</p><p>') + '</p>';
         }
     };
+}
+
+function id(a) {
+    return a;
 }
 

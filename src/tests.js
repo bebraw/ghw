@@ -22,4 +22,5 @@ assert.ok(bracket_link('[[a]] [[b]]') == '<a href="a.html">a</a> <a href="b.html
 
 var paragraphs = ghw.transformers.paragraphs;
 assert.ok(paragraphs('foo\nbar') == '<p>foo</p><p>bar</p>');
+assert.ok(paragraphs('foo\n\nbar') == '<p>foo</p><p>bar</p>');
 

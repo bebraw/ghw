@@ -1,14 +1,34 @@
 {
-    'name': 'ghw',
-    'description': 'Github wiki to HTML converter',
-    'author': 'Juho Vepsalainen',
-    'version': '0.3.0',
-    'main': './lib/ghw.js',
-    'bin': './bin/ghw',
-    'preferGlobal': false,
-    'repository': 'git@github.com:bebraw/ghw.git',
-    'homepage': 'https://github.com/bebraw/ghw',
-    'bugs': { 'url': 'https://github.com/bebraw/ghw/issues' },
-    'keywords': ['markdown', 'github', 'html', 'wiki'],
-    'tags': ['markdown', 'github', 'html', 'wiki'],
+    "name": "ghw",
+    "description": "Github wiki to HTML converter",
+    "author": "Juho Vepsalainen <bebraw@gmail.com>",
+    "version": "0.3.5",
+
+    "dependencies": {
+        "wrench": ">= 1.3.7",
+        "marked": ">= 0.2.3",
+        "mu2": ">= 0.5.8",
+        "commander": ">= 0.5.2"
+    },
+
+    "main": "./lib/ghw.js",
+    "bin": "./bin/ghw",
+
+    "repository": {
+        "type": "git",
+        "url": "https://bebraw@github.com/bebraw/ghw.git"
+    },
+
+    "homepage": "https://github.com/bebraw/ghw",
+
+    "bugs": {
+        "url": "https://github.com/bebraw/ghw/issues"
+    },
+
+    "keywords": ["markdown", "github", "html", "wiki"],
+
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://github.com/bebraw/ghw/blob/master/LICENSE"
+    }]
 }

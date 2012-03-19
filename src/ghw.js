@@ -3,6 +3,7 @@
 // where <input> is either a file or a dir.
 var VERSION = '0.0.3'
 
+var path = require('path');
 var fs = require('fs');
 var marked = require('marked');
 var mu = require('mu2');
@@ -28,16 +29,39 @@ if(require.main == module) {
 
     console.log('ghw ' + VERSION);
 
-    transform(program.input, transformers(), function(f, d) {
+    fs.stat(program.input, function(err, stats) {
+        if (err) throw err;
+
+        if(stats.isFile()) {
+            transform(program.input, transformers(), proc);
+        }
+        if(stats.isDirectory()) {
+            fs.readdir(program.input, function(err, files) {
+                if (err) throw err;
+
+                files.forEach(function (file) {
+                    var p = path.join(program.input, file);
+                   
+                    fs.stat(p, function(err, stats) {
+                        if(stats.isFile()) {
+                            transform(p, transformers(), proc);
+                        }
+                    });
+                });
+            });
+        }
+    });
+
+    function proc(f, d) {
         var stream = mu.compileAndRender(program.template, {data: d});
-        var target = program.output + f.substring(f.lastIndexOf('/'), f.length).substring(0, f.indexOf('.')) + 'html';
+        var target = path.join(program.output, path.basename(f, '.md') + '.html');
         var writeStream = fs.createWriteStream(target);
 
         stream.pipe(writeStream);
         stream.on('end', function() {
             console.log('Wrote ' + target);
         });
-    });
+    }
 }
 else {
     exports.VERSION = VERSION;

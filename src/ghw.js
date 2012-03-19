@@ -96,7 +96,7 @@ function transformers() {
     return {
         pipe_link: function(t) {
             return t.replace(
-                /\[([^\|]+)\|([^\]]+)\]/,
+                /\[([^\|]+)\|([^\]]+)\]/g,
                 function(orig, a, b) {
                     return '<a href="' + b.replace(' ', '-') + '">' + a + '</a>';
                 }
@@ -104,7 +104,7 @@ function transformers() {
         },
         bracket_link: function(t) {
             return t.replace(
-                /\[\[([^\]]+)\]\]/,
+                /\[\[([^\]]+)\]\]/g,
                 function(orig, a) {
                     return '<a href="' + a.replace(' ', '-')  + '.html">' + a + '</a>';
                 }

@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// Usage:  ghw <input> <output dir>
-// where <input> is either a file or a dir.
 var VERSION = '0.1.0'
 
 var path = require('path');
@@ -99,13 +97,17 @@ function transformers() {
         pipe_link: function(t) {
             return t.replace(
                 /\[([^\|]+)\|([^\]]+)\]/,
-                '<a href="$2">$1</a>'
+                function(orig, a, b) {
+                    return '<a href="' + b.replace(' ', '-') + '">' + a + '</a>';
+                }
             );
         },
         bracket_link: function(t) {
             return t.replace(
                 /\[\[([^\]]+)\]\]/,
-                '<a href="$1.html">$1</a>'
+                function(orig, a) {
+                    return '<a href="' + a.replace(' ', '-')  + '.html">' + a + '</a>';
+                }
             );
         }
     };

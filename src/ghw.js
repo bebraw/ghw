@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var VERSION = '0.1.0'
+var VERSION = '0.2.0'
 
 var path = require('path');
 var fs = require('fs');
@@ -32,16 +32,19 @@ if(require.main == module) {
     });
 
     function main() {
-        console.log('ghw ' + VERSION);
+        console.log('ghw ' + VERSION + '\n');
 
         // TODO: copy all except base to output
-        // TODO: create output dir unless it exists already
+
+        if(!path.existsSync(program.output)) {
+            fs.mkdirSync(program.output);
+        }
 
         fs.stat(program.input, function(err, stats) {
             if (err) throw err;
 
             if(stats.isFile()) {
-                transform(program.input, transformers(), partial(proc, baseTemplate));
+                transform(program.input, transformers(), partial(proc, baseTemplate, program.output));
             }
             if(stats.isDirectory()) {
                 fs.readdir(program.input, function(err, files) {
@@ -52,7 +55,7 @@ if(require.main == module) {
                    
                         fs.stat(p, function(err, stats) {
                             if(stats.isFile()) {
-                                transform(p, transformers(), partial(proc, baseTemplate));
+                                transform(p, transformers(), partial(proc, baseTemplate, program.output));
                             }
                         });
                     });
@@ -61,9 +64,9 @@ if(require.main == module) {
         });
     }
 
-    function proc(t, f, d) {
+    function proc(t, o, f, d) {
         var stream = mu.compileAndRender(t, {data: d});
-        var target = path.join(program.output, path.basename(f, '.md') + '.html');
+        var target = path.join(o, path.basename(f, '.md') + '.html');
         var writeStream = fs.createWriteStream(target);
 
         stream.pipe(writeStream);

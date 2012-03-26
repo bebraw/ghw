@@ -25,7 +25,14 @@
 </head>
 <body>
     <div class="container">
-        <div class="three columns sidebar"></div>
+        <div class="three columns sidebar">
+            <h3 id="logo">Mywiki</h3>
+            <ul>
+                {{#sections}}
+                    <li>{{name}}</li>
+                {{/sections}}
+            </ul>
+        </div>
         <div class="twelve columns offset-by-one content">
             <header>
                 <h1>Mywiki</h1>

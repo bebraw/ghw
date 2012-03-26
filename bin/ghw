@@ -40,20 +40,17 @@ function main() {
             ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output));
         }   
         if(stats.isDirectory()) {
-            fs.readdir(program.input, function(err, files) {
-                if (err) throw err;
+            var files = fs.readdirSync(program.input);
 
-                files.forEach(function (file) {
-                    var p = path.join(program.input, file);
-     
-                    fs.stat(p, function(err, stats) {
-                        if(stats.isFile()) {
-                            ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output));
-                        }   
-                    }); 
-                }); 
+            files.forEach(function (file) {
+                var p = path.join(program.input, file);
+                var stats = fs.statSync(p);
+
+                if(stats.isFile()) {
+                    ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output));
+                }   
             }); 
-        }   
+        }
     }); 
 
     wrench.copyDirSyncRecursive(program.templates, program.output);

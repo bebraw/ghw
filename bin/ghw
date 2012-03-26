@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var VERSION = '0.5.1';
+var VERSION = '0.5.2';
 
 var path = require('path');
 var fs = require('fs');

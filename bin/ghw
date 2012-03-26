@@ -61,7 +61,7 @@ function main() {
 
 function proc(t, o, silent, f, ctx) {
     var stream = mu.compileAndRender(t, ctx);
-    var target = path.join(o, path.basename(f, '.md') + '.html');
+    var target = path.join(o, path.basename(f, '.md').toLowerCase() + '.html');
     var writeStream = fs.createWriteStream(target);
 
     stream.pipe(writeStream);

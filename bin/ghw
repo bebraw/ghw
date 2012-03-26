@@ -60,8 +60,8 @@ function main() {
     // TODO: might want to skip dot files and base.html
 }
 
-function proc(t, o, f, d) {
-    var stream = mu.compileAndRender(t, {data: d});
+function proc(t, o, f, ctx) {
+    var stream = mu.compileAndRender(t, ctx);
     var target = path.join(o, path.basename(f, '.md') + '.html');
     var writeStream = fs.createWriteStream(target);
 

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="stylesheets/base.css">
     <link rel="stylesheet" href="stylesheets/skeleton.css">
     <link rel="stylesheet" href="stylesheets/layout.css">
+    <link rel="stylesheet" href="stylesheets/docs.css">
 
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,14 +27,16 @@
 <body>
     <div class="container">
         <div class="three columns sidebar">
+            <nav>
             <h3 id="logo">Mywiki</h3>
-            <ul>
-                {{#sections}}
-                    <li><a href="#{{id}}">{{name}}</a></li>
-                {{/sections}}
-            </ul>
+                <ul>
+                    {{#sections}}
+                        <li><a href="#{{id}}">{{name}}</a></li>
+                    {{/sections}}
+                </ul>
+            </nav>
         </div>
-        <div class="twelve columns offset-by-one content">
+        <div class="twelve columns offset-by-two content">
             <header>
                 <h1>Mywiki</h1>
                 <a href="http://twitter.com/share" class="twitter-share-button" data-text="Mywiki" data-count="horizontal" data-via="dhg">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>

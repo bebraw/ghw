@@ -3,7 +3,6 @@ var VERSION = '0.5.2';
 
 var path = require('path');
 var fs = require('fs');
-var wrench = require('wrench');
 var mu = require('mu2');
 var ghw = require('../');
 
@@ -41,9 +40,6 @@ function main() {
     }   
     if(stats.isDirectory()) {
         var files = fs.readdirSync(program.input);
-
-        // TODO: might want to skip dot files and base.html
-        wrench.copyDirSyncRecursive(program.templates, program.output);
 
         files.forEach(function (file) {
             var p = path.join(program.input, file);

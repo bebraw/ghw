@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>Your Page Title Here :)</title>
+    <title>Mywiki</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -25,7 +25,17 @@
 </head>
 <body>
     <div class="container">
-        {{{ data }}}
+        <div class="three columns sidebar"></div>
+        <div class="twelve columns offset-by-one content">
+            <header>
+                <h1>Mywiki</h1>
+                <a href="http://twitter.com/share" class="twitter-share-button" data-text="Mywiki" data-count="horizontal" data-via="dhg">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+            </header>
+            <hr class="large">
+            <div>
+                {{{ data }}}
+            </div>
+        </div>
     </div>
 
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>

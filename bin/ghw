@@ -16,6 +16,7 @@ program.
     option('-t --templates <template>', 'template directory').
     option('-i --input <input>', 'input (file/directory)').
     option('-o --output <output>', 'output directory').
+    option('-s --silent', 'silent').
     parse(process.argv);
 
 if (!program.templates) quit('Missing template directory');
@@ -23,6 +24,7 @@ if (!program.input) quit('Missing input');
 if (!program.output) quit('Missing output');
 
 var baseTemplate = path.join(program.templates, 'base.html');
+var silent = program.silent;
 
 path.exists(baseTemplate, function(exists) {
     exists? main(): quit('Template directory is missing base.html'); 
@@ -37,7 +39,7 @@ function main() {
         if (err) throw err;
 
         if(stats.isFile()) {
-            ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output));
+            ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
         }   
         if(stats.isDirectory()) {
             var files = fs.readdirSync(program.input);
@@ -47,7 +49,7 @@ function main() {
                 var stats = fs.statSync(p);
 
                 if(stats.isFile()) {
-                    ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output));
+                    ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
                 }   
             }); 
         }
@@ -57,14 +59,14 @@ function main() {
     // TODO: might want to skip dot files and base.html
 }
 
-function proc(t, o, f, ctx) {
+function proc(t, o, silent, f, ctx) {
     var stream = mu.compileAndRender(t, ctx);
     var target = path.join(o, path.basename(f, '.md') + '.html');
     var writeStream = fs.createWriteStream(target);
 
     stream.pipe(writeStream);
     stream.on('end', function() {
-        console.log('Wrote ' + target);
+        if(!silent) console.log('Wrote ' + target);
     });
 }
 

@@ -35,28 +35,27 @@ function main() {
         fs.mkdirSync(program.output);
     }   
 
-    fs.stat(program.input, function(err, stats) {
-        if (err) throw err;
+    var stats = fs.statSync(program.input);
+    if(stats.isFile()) {
+        ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
+    }   
+    if(stats.isDirectory()) {
+        var files = fs.readdirSync(program.input);
 
-        if(stats.isFile()) {
-            ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
-        }   
-        if(stats.isDirectory()) {
-            var files = fs.readdirSync(program.input);
+        // TODO: might want to skip dot files and base.html
+        wrench.copyDirSyncRecursive(program.templates, program.output);
 
-            files.forEach(function (file) {
-                var p = path.join(program.input, file);
-                var stats = fs.statSync(p);
+        files.forEach(function (file) {
+            var p = path.join(program.input, file);
+            var stats = fs.statSync(p);
 
-                if(stats.isFile()) {
-                    ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
-                }   
-            }); 
-        }
-    }); 
+            if(stats.isFile()) {
+                ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
+            }   
+        });
 
-    wrench.copyDirSyncRecursive(program.templates, program.output);
-    // TODO: might want to skip dot files and base.html
+        fs.renameSync(path.join(program.output, 'home.html'), path.join(program.output, 'index.html'));
+    }
 }
 
 function proc(t, o, silent, f, ctx) {

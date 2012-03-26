@@ -9,13 +9,14 @@ var ghw = require('../');
 
 var program = require('commander');
 
+console.log('ghw ' + VERSION + '\n');
+
 program.
     version(VERSION).
     option('-t --templates <template>', 'template directory').
     option('-i --input <input>', 'input (file/directory)').
     option('-o --output <output>', 'output directory').
     parse(process.argv);
-
 
 if (!program.templates) quit('Missing template directory');
 if (!program.input) quit('Missing input');
@@ -28,8 +29,6 @@ path.exists(baseTemplate, function(exists) {
 }); 
 
 function main() {
-    console.log('ghw ' + VERSION + '\n');
-
     if(!path.existsSync(program.output)) {
         fs.mkdirSync(program.output);
     }   

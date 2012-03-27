@@ -5,7 +5,7 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>Mywiki</title>
+    <title>{{ name }}</title>
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -28,7 +28,7 @@
     <div class="container">
         <div class="three columns sidebar">
             <nav>
-            <h3 id="logo">Mywiki</h3>
+            <h3 id="logo">{{ name }}</h3>
                 <ul>
                     {{#sections}}
                         <li><a href="#{{id}}">{{name}}</a></li>
@@ -38,7 +38,7 @@
         </div>
         <div class="twelve columns offset-by-three content">
             <header>
-                <h1>Mywiki</h1>
+                <h1>{{ name }}</h1>
                 <a href="http://twitter.com/share" class="twitter-share-button" data-text="Mywiki" data-count="horizontal" data-via="dhg">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
             </header>
             <hr class="large">

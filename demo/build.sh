@@ -1,3 +1,3 @@
-ghw -i jswiki.wiki -o out -t templates -s
+ghw -c conf.json -i jswiki.wiki -o out -t templates -s
 cp -r templates/[!.]* out
 

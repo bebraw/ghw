@@ -12,6 +12,7 @@ console.log('ghw ' + VERSION + '\n');
 
 program.
     version(VERSION).
+    option('-c --config <json file>', 'configuration file').
     option('-t --templates <template>', 'template directory').
     option('-i --input <input>', 'input (file/directory)').
     option('-o --output <output>', 'output directory').
@@ -24,6 +25,7 @@ if (!program.output) quit('Missing output');
 
 var baseTemplate = path.join(program.templates, 'base.html');
 var silent = program.silent;
+var conf = program.config? JSON.parse(fs.readFileSync(program.config, 'utf-8')): undefined;
 
 path.exists(baseTemplate, function(exists) {
     exists? main(): quit('Template directory is missing base.html'); 
@@ -36,7 +38,7 @@ function main() {
 
     var stats = fs.statSync(program.input);
     if(stats.isFile()) {
-        ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
+        ghw.transform(program.input, ghw.transformers, partial(proc, baseTemplate, program.output, silent, conf));
     }   
     if(stats.isDirectory()) {
         var files = fs.readdirSync(program.input);
@@ -46,7 +48,7 @@ function main() {
             var stats = fs.statSync(p);
 
             if(stats.isFile()) {
-                ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output, silent));
+                ghw.transform(p, ghw.transformers, partial(proc, baseTemplate, program.output, silent, conf));
             }   
         });
 
@@ -54,8 +56,8 @@ function main() {
     }
 }
 
-function proc(t, o, silent, f, ctx) {
-    var stream = mu.compileAndRender(t, ctx);
+function proc(t, o, silent, conf, f, ctx) {
+    var stream = mu.compileAndRender(t, merge(conf, ctx));
     var target = path.join(o, path.basename(f, '.md').toLowerCase() + '.html');
     var writeStream = fs.createWriteStream(target);
 
@@ -63,6 +65,14 @@ function proc(t, o, silent, f, ctx) {
     stream.on('end', function() {
         if(!silent) console.log('Wrote ' + target);
     });
+}
+
+// http://stackoverflow.com/questions/171251/how-can-i-merge-properties-of-two-javascript-objects-dynamically
+function merge(obj1, obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
 }
 
 function quit(msg) {

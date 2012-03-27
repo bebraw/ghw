@@ -57,6 +57,7 @@ function main() {
 }
 
 function proc(t, o, silent, conf, f, ctx) {
+    conf.pageName = path.basename(f, '.md');
     var stream = mu.compileAndRender(t, merge(conf, ctx));
     var target = path.join(o, path.basename(f, '.md').toLowerCase() + '.html');
     var writeStream = fs.createWriteStream(target);

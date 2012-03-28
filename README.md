@@ -7,8 +7,9 @@ This tool makes it possible for you to serve the content of your Github wiki pag
 * [marked](https://github.com/chjj/marked)
 * [Mu](https://github.com/raycmorgan/Mu)
 * [commander.js](https://github.com/visionmedia/commander.js)
+* [suite.js](https://github.com/bebraw/suite.js)
 
-You can use "sudo npm install marked mu2 commander" to install these. Note that you won't need commander.js if you use ghw as a module.
+You can use "sudo npm install marked mu2 commander suite.js" to install these. Note that you won't need commander.js if you use ghw as a module. Also suite.js is optional (needed by tests).
 
 ## Thanks
 

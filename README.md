@@ -5,7 +5,7 @@ This tool makes it possible for you to serve the content of your Github wiki pag
 ## Dependencies
 
 * [marked](https://github.com/chjj/marked)
-* [Mu](https://github.com/raycmorgan/Mu)
+* [hogan](http://twitter.github.com/hogan.js/)
 * [commander.js](https://github.com/visionmedia/commander.js)
 * [suite.js](https://github.com/bebraw/suite.js)
 

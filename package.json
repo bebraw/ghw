@@ -2,11 +2,11 @@
     "name": "ghw",
     "description": "Github wiki to HTML converter",
     "author": "Juho Vepsalainen <bebraw@gmail.com>",
-    "version": "0.7.1",
+    "version": "0.7.2",
 
     "dependencies": {
         "marked": ">= 0.2.3",
-        "mu2": ">= 0.5.8",
+        "hogan": "1.0.5-dev",
         "commander": ">= 0.5.2",
         "suite.js": ">= 0.1.1"
     },

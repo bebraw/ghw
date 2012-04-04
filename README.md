@@ -9,7 +9,7 @@ This tool makes it possible for you to serve the content of your Github wiki pag
 * [commander.js](https://github.com/visionmedia/commander.js)
 * [suite.js](https://github.com/bebraw/suite.js)
 
-You can use "sudo npm install marked mu2 commander suite.js" to install these. Note that you won't need commander.js if you use ghw as a module. Also suite.js is optional (needed by tests).
+You can use "sudo npm install" to install the dependencies locally. After that you should be able to run the tests (lib/tests.js)
 
 ## Thanks
 

@@ -8,6 +8,7 @@ This tool makes it possible for you to serve the content of your Github wiki pag
 * [hogan](http://twitter.github.com/hogan.js/)
 * [commander.js](https://github.com/visionmedia/commander.js)
 * [suite.js](https://github.com/bebraw/suite.js)
+* [funkit](https://github.com/bebraw/funkit)
 
 You can use "sudo npm install" to install the dependencies locally. After that you should be able to run the tests (lib/tests.js)
 

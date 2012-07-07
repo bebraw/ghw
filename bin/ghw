@@ -32,7 +32,7 @@ fs.exists(baseTemplate, function(exists) {
 }); 
 
 function main() {
-    if(!path.existsSync(program.output)) {
+    if(!fs.existsSync(program.output)) {
         fs.mkdirSync(program.output);
     }   
 

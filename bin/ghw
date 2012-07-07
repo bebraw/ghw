@@ -27,12 +27,12 @@ var baseTemplate = path.join(program.templates, 'base.html');
 var silent = program.silent;
 var conf = program.config? JSON.parse(fs.readFileSync(program.config, 'utf-8')): {};
 
-path.exists(baseTemplate, function(exists) {
+fs.exists(baseTemplate, function(exists) {
     exists? main(): quit('Template directory is missing base.html'); 
 }); 
 
 function main() {
-    if(!path.existsSync(program.output)) {
+    if(!fs.existsSync(program.output)) {
         fs.mkdirSync(program.output);
     }   
 

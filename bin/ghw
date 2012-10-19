@@ -3,7 +3,7 @@ var VERSION = '0.8.1';
 
 var path = require('path');
 var fs = require('fs');
-var hogan = require('hogan');
+var hogan = require('hogan.js');
 var ghw = require('../');
 
 var program = require('commander');

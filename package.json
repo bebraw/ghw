@@ -8,7 +8,7 @@
         "marked": ">= 0.2.3",
         "hogan.js": "2.0.0",
         "commander": ">= 0.5.2",
-        "suite.js": ">= 0.1.1",
+        "suite.js": "== 0.1.1",
         "funkit": "==0.3.3"
     },
 

@@ -2,7 +2,7 @@
     "name": "ghw",
     "description": "Github wiki to HTML converter",
     "author": "Juho Vepsalainen <bebraw@gmail.com>",
-    "version": "0.8.2",
+    "version": "0.8.3",
 
     "dependencies": {
         "marked": ">= 0.2.3",

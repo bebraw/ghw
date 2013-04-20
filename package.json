@@ -5,7 +5,7 @@
     "version": "0.8.4",
 
     "dependencies": {
-        "marked": ">= 0.2.3",
+        "marked": "0.2.8",
         "hogan.js": "2.0.0",
         "commander": ">= 0.5.2",
         "suite.js": "== 0.1.1",

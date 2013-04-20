@@ -20,6 +20,10 @@
         "url": "https://bebraw@github.com/bebraw/ghw.git"
     },
 
+    "scripts": {
+      "test": "node ./lib/tests.js"
+    },
+
     "homepage": "https://github.com/bebraw/ghw",
 
     "bugs": {

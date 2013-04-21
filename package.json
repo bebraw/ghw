@@ -9,7 +9,8 @@
         "hogan.js": "2.0.0",
         "commander": "1.1.1",
         "suite.js": "0.6.0",
-        "funkit": "0.7.7"
+        "funkit": "0.7.7",
+        "highlight": "0.2.3"
     },
 
     "main": "./lib/ghw.js",

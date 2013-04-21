@@ -64,7 +64,7 @@ function proc(t, o, silent, conf, f, ctx) {
     var tmpl = hogan.compile(fs.readFileSync(t, 'utf-8'));
     var data = tmpl.render(merge(conf, ctx))
 
-    var target = path.join(o, path.basename(f, '.md').toLowerCase() + '.html');
+    var target = path.join(o, escape(path.basename(f, '.md').toLowerCase()) + '.html');
     fs.writeFileSync(target, data);
 
     if(!silent) console.log('Wrote ' + target);

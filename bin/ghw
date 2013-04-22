@@ -3,7 +3,7 @@ var VERSION = require('../package.json').version;
 
 var path = require('path');
 var fs = require('fs');
-var hogan = require('hogan.js');
+var handlebars = require('handlebars');
 var ghw = require('../');
 
 var program = require('commander');
@@ -61,8 +61,7 @@ function main() {
 
 function proc(t, o, silent, conf, f, ctx) {
     conf.pageName = path.basename(f, '.md');
-    var tmpl = hogan.compile(fs.readFileSync(t, 'utf-8'));
-    var data = tmpl.render(merge(conf, ctx))
+    var data = handlebars.compile(fs.readFileSync(t, 'utf-8'))(merge(conf, ctx));
 
     var target = path.join(o, escape(path.basename(f, '.md').toLowerCase()) + '.html');
     fs.writeFileSync(target, data);

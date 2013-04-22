@@ -6,7 +6,7 @@
 
     "dependencies": {
         "marked": "0.2.8",
-        "hogan.js": "2.0.0",
+        "handlebars": "1.0.10",
         "commander": "1.1.1",
         "suite.js": "0.6.0",
         "funkit": "0.7.7",

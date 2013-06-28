@@ -1,40 +1,39 @@
 {
-    "name": "ghw",
-    "description": "Github wiki to HTML converter",
-    "author": "Juho Vepsalainen <bebraw@gmail.com>",
-    "version": "0.9.4",
-
-    "dependencies": {
-        "marked": "0.2.8",
-        "handlebars": "1.0.10",
-        "commander": "1.1.1",
-        "suite.js": "0.6.0",
-        "funkit": "0.7.7",
-        "highlight": "0.2.3"
-    },
-
-    "main": "./lib/ghw.js",
-    "bin": "./bin/ghw",
-
-    "repository": {
-        "type": "git",
-        "url": "https://bebraw@github.com/bebraw/ghw.git"
-    },
-
-    "scripts": {
-      "test": "node ./lib/tests.js"
-    },
-
-    "homepage": "https://github.com/bebraw/ghw",
-
-    "bugs": {
-        "url": "https://github.com/bebraw/ghw/issues"
-    },
-
-    "keywords": ["markdown", "github", "html", "wiki"],
-
-    "licenses": [{
-        "type": "MIT",
-        "url": "https://github.com/bebraw/ghw/blob/master/LICENSE"
-    }]
+  "name": "ghw",
+  "description": "Github wiki to HTML converter",
+  "author": "Juho Vepsalainen <bebraw@gmail.com>",
+  "version": "0.9.4",
+  "dependencies": {
+    "marked": "0.2.9",
+    "handlebars": "1.0.12",
+    "commander": "1.2.0",
+    "suite.js": "0.6.0",
+    "funkit": "0.7.7",
+    "highlight.js": "7.3.0"
+  },
+  "main": "./lib/ghw.js",
+  "bin": "./bin/ghw",
+  "repository": {
+    "type": "git",
+    "url": "https://bebraw@github.com/bebraw/ghw.git"
+  },
+  "scripts": {
+    "test": "node ./lib/tests.js"
+  },
+  "homepage": "https://github.com/bebraw/ghw",
+  "bugs": {
+    "url": "https://github.com/bebraw/ghw/issues"
+  },
+  "keywords": [
+    "markdown",
+    "github",
+    "html",
+    "wiki"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/bebraw/ghw/blob/master/LICENSE"
+    }
+  ]
 }

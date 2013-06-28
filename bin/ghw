@@ -32,7 +32,7 @@ var silent = program.silent;
 var conf = program.config? JSON.parse(fs.readFileSync(program.config, 'utf-8')): {};
 
 fs.exists(baseTemplate, function(exists) {
-    exists? main(): quit('Template directory is missing base.html'); 
+    exists? main(): quit('Template directory is missing base.html');
 });
 
 function main() {

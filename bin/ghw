@@ -3,6 +3,8 @@ var VERSION = require('../package.json').version;
 
 var path = require('path');
 var fs = require('fs');
+var qs = require('querystring');
+
 var handlebars = require('handlebars');
 var funkit = require('funkit');
 var ghw = require('../');
@@ -23,16 +25,27 @@ program.
     option('-s --silent', 'silent').
     parse(process.argv);
 
-if (!program.templates) quit('Missing template directory');
-if (!program.input) quit('Missing input');
-if (!program.output) quit('Missing output');
+if(!program.templates) {
+    quit('Missing template directory');
+}
+if(!program.input) {
+    quit('Missing input');
+}
+if(!program.output) {
+    quit('Missing output');
+}
 
 var baseTemplate = path.join(program.templates, 'base.html');
 var silent = program.silent;
 var conf = program.config? JSON.parse(fs.readFileSync(program.config, 'utf-8')): {};
 
 fs.exists(baseTemplate, function(exists) {
-    exists? main(): quit('Template directory is missing base.html');
+    if(exists) {
+        main();
+    }
+    else {
+        quit('Template directory is missing base.html');
+    }
 });
 
 function main() {
@@ -67,10 +80,12 @@ function proc(t, o, silent, conf, f, ctx) {
     conf.pageName = path.basename(f, '.md');
     var data = handlebars.compile(fs.readFileSync(t, 'utf-8'))(merge(conf, ctx));
 
-    var target = path.join(o, escape(path.basename(f, '.md').toLowerCase()) + '.html');
+    var target = path.join(o, qs.escape(path.basename(f, '.md').toLowerCase()) + '.html');
     fs.writeFileSync(target, data);
 
-    if(!silent) console.log('Wrote ' + target);
+    if(!silent) {
+        console.log('Wrote ' + target);
+    }
 }
 
 function quit(msg) {

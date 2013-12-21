@@ -1,6 +1,5 @@
-#!/usr/bin/env node
-var t = require('./ghw').transformers;
 var suite = require('suite.js');
+var t = require('../').transformers;
 
 
 suite(matchToHTML(t.bracketPipeLink), [

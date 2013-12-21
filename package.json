@@ -18,7 +18,7 @@
     "url": "https://bebraw@github.com/bebraw/ghw.git"
   },
   "scripts": {
-    "test": "node ./lib/tests.js"
+    "test": "node ./tests"
   },
   "homepage": "https://github.com/bebraw/ghw",
   "bugs": {
@@ -35,5 +35,8 @@
       "type": "MIT",
       "url": "https://github.com/bebraw/ghw/blob/master/LICENSE"
     }
-  ]
+  ],
+  "devDependencies": {
+    "require-dir": "~0.1.0"
+  }
 }

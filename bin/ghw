@@ -57,7 +57,13 @@ function main() {
     var stats = fs.statSync(program.input);
     if(stats.isFile()) {
         data = fs.readFileSync(program.input, 'utf-8');
-        ghw.transform(program.input, data, ghw.transformers, partial(proc, baseTemplate, program.output, silent, conf));
+        ghw.transform(data, ghw.transformers, partial(proc, {
+            inputPath: baseTemplate,
+            outputDir: program.output,
+            silent: silent,
+            conf: conf,
+            input: program.input
+        }));
     }
     if(stats.isDirectory()) {
         var files = fs.readdirSync(program.input);
@@ -68,7 +74,13 @@ function main() {
 
             if(stats.isFile()) {
                 data = fs.readFileSync(p, 'utf-8');
-                ghw.transform(p, data, ghw.transformers, partial(proc, baseTemplate, program.output, silent, conf));
+                ghw.transform(data, ghw.transformers, partial(proc, {
+                    inputPath: baseTemplate,
+                    outputDir: program.output,
+                    silent: silent,
+                    conf: conf,
+                    input: p
+                }));
             }
         });
 
@@ -76,14 +88,18 @@ function main() {
     }
 }
 
-function proc(t, o, silent, conf, f, ctx) {
-    conf.pageName = path.basename(f, '.md');
-    var data = handlebars.compile(fs.readFileSync(t, 'utf-8'))(merge(conf, ctx));
+function proc(o, ctx) {
+    // inputPath, outputDir, silent, conf, input
+    var inputBase = path.basename(o.input, '.md');
 
-    var target = path.join(o, qs.escape(path.basename(f, '.md').toLowerCase()) + '.html');
+    o.conf.pageName = inputBase;
+
+    var data = handlebars.compile(fs.readFileSync(o.inputPath, 'utf-8'))(merge(o.conf, ctx));
+    var target = path.join(o.outputDir, qs.escape(inputBase.toLowerCase()) + '.html');
+
     fs.writeFileSync(target, data);
 
-    if(!silent) {
+    if(!o.silent) {
         console.log('Wrote ' + target);
     }
 }

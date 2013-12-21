@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var VERSION = require('../package.json').version;
 
+var _extend = require('util')._extend;
 var path = require('path');
 var fs = require('fs');
 var qs = require('querystring');
@@ -54,16 +55,19 @@ function main() {
     }
 
     var data;
+    var base = {
+        inputPath: baseTemplate,
+        outputDir: program.output,
+        silent: silent,
+        conf: conf
+    };
     var stats = fs.statSync(program.input);
+
     if(stats.isFile()) {
         data = fs.readFileSync(program.input, 'utf-8');
-        ghw.transform(data, ghw.transformers, partial(proc, {
-            inputPath: baseTemplate,
-            outputDir: program.output,
-            silent: silent,
-            conf: conf,
+        ghw.transform(data, ghw.transformers, partial(proc, extend(base, {
             input: program.input
-        }));
+        })));
     }
     if(stats.isDirectory()) {
         var files = fs.readdirSync(program.input);
@@ -74,18 +78,18 @@ function main() {
 
             if(stats.isFile()) {
                 data = fs.readFileSync(p, 'utf-8');
-                ghw.transform(data, ghw.transformers, partial(proc, {
-                    inputPath: baseTemplate,
-                    outputDir: program.output,
-                    silent: silent,
-                    conf: conf,
+                ghw.transform(data, ghw.transformers, partial(proc, extend(base, {
                     input: p
-                }));
+                })));
             }
         });
 
         fs.renameSync(path.join(program.output, 'home.html'), path.join(program.output, 'index.html'));
     }
+}
+
+function extend(a, b) {
+    return _extend(_extend({}, a), b);
 }
 
 function proc(o, ctx) {

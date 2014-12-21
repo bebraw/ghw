@@ -4,12 +4,11 @@
   "author": "Juho Vepsalainen <bebraw@gmail.com>",
   "version": "0.9.6",
   "dependencies": {
-    "marked": "0.2.10",
-    "handlebars": "1.1.2",
-    "commander": "2.1.0",
-    "suite.js": "0.6.0",
-    "funkit": "0.7.8",
-    "highlight.js": "7.5.0"
+    "commander": "^2.1.0",
+    "funkit": "^0.7.8",
+    "handlebars": "^1.1.2",
+    "highlight.js": "^7.5.0",
+    "marked": "^0.2.10"
   },
   "main": "./lib/ghw.js",
   "bin": "./bin/ghw",
@@ -37,6 +36,7 @@
     }
   ],
   "devDependencies": {
-    "require-dir": "~0.1.0"
+    "require-dir": "~0.1.0",
+    "suite.js": "^0.6.0"
   }
 }
